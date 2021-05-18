@@ -1,0 +1,36 @@
+pipeline {
+    environment{
+        username = '144gaurav@gmail.com'
+       
+    }
+    agent any
+   
+
+    stages {
+        stage('Build') {
+           
+            steps {
+                script{
+                   withCredentials([usernamePassword(credentialsId: '144gaurav', usernameVariable: '144gaurav@gmail.com', passwordVariable: 'Socgen%12345')])
+                   {
+                        print 'username=' + username
+                      // Get some code from a GitHub repository
+                      git credentialsId: '144gaurav', url: 'https://github.com/144gaurav/Jenkins_Maven_Demo.git' 
+
+                              // To run Maven on a Windows agent, use
+                       bat "mvn -f pom.xml -Dmaven.test.failure.ignore=true clean package"
+                   }
+                }
+            }
+
+            post {
+                // If Maven was able to run the tests, even if some of the test
+               
+                success {
+                    junit '**/target/surefire-reports/TEST-*.xml'
+                   // archiveArtifacts 'target/*.jar'
+                }
+            }
+        }
+    }
+}
