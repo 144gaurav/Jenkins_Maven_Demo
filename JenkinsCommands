@@ -1,0 +1,20 @@
+java -jar jenkins.war
+
+mvn archetype:generate -DgroupId=com.abc -DartifactId=DemoProject -DarchetypeArtifactId-maven-archetype-quickstart -Dinteractivemode=false
+
+echo "# Jenkins_Maven_Demo" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/144gaurav/Jenkins_Maven_Demo.git
+git push -u origin main
+
+run ngrok
+ngrok http -host-header=localhost 8080
+
+url to add in jenkins
+http://338819f040cc.ngrok.io
+
+webhook url to add in github repo
+http://338819f040cc.ngrok.io/github-webhook/
